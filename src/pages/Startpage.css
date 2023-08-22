@@ -1,0 +1,68 @@
+/* Startpage.css */
+
+.main-container{
+  background-image: url('/public/_8a7cf628-0238-4c61-8611-59da7599abcc-transformed.jpeg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center ;
+  min-height: 100vh;
+}
+
+.description-container {
+  background-color: black; /* Black background color for the description */
+  padding: 20px;
+  border-radius: 5px;
+  position: absolute; /* Position it absolutely within .main-container */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center it perfectly */
+}
+
+.description-text {
+  color: white; /* Text color */
+  font-size: 18px;
+  text-align: center;
+}
+
+.make-survey-button {
+  background-color: red;
+  color: black;
+  font-size: 24px;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-top: 500px;
+  text-decoration: none;
+  margin-left: 1225px
+}
+
+.make-survey-button:hover {
+    background-color: darkred;
+}
+
+.signinsignup{
+  position: relative;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  top: -639px;
+  margin-left: 1700px;
+}
+
+.signup-button{
+  background-color: red;
+  text-decoration: none;
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  text-align: center; /* Center the button text */
+  width: 100%;
+}
+
+.signup-button:hover{
+  background-color: darkred;
+}
