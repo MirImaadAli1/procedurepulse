@@ -1,4 +1,4 @@
-#Method Sharing Web App
+# Method Sharing Web App
 
 Welcome to the Method Sharing Web App! This platform allows users to create and share methods with a community of like-minded individuals. Whether you're a programmer, scientist, engineer, or anyone looking to share or discover methods, this app is designed for you.
 Features
