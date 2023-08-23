@@ -1,0 +1,46 @@
+.mn-main-container{
+    background-image: url('/public/makenewmethod.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center ;
+    min-height: 100vh;
+}
+
+.mn-container{
+    
+    background-color: black;
+    color: white;
+    position: relative;
+    width: 100vh;
+    margin-left: 40vh;
+    padding: 10vh;
+    top: 10vh;
+}
+
+.add-question-button{
+    background-color: red;
+    margin-left: 2vh;
+    color: black;
+    font-weight: bolder;
+}
+
+.makemethod-input{
+    margin-left: 1vh;
+}
+
+li{
+    margin-bottom: 2vh;
+}
+
+.submit-button{
+    background-color: red;
+    position: relative;
+    top: 5vh;
+    margin-left: 39vh;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    padding: 2vh 5vh;
+    border-radius: 2vh;
+    display: inline-block;
+}
