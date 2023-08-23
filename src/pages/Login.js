@@ -40,6 +40,10 @@ function Login() {
       });
   };
 
+  const navigateToHome = () => {
+    window.location.href = "/";
+  };
+
   return (
     <div className="si-main-background">
       <div className="sign-in-background">
@@ -62,7 +66,7 @@ function Login() {
               sitekey="6LcDm6wnAAAAALVjPYwb3YiLiCnyhvmfhFv2zZ8c" // Replace with your reCAPTCHA site key
               onChange={handleRecaptchaChange}
             />
-            <button className="si-button" type="submit">Log In</button>
+            <button className="si-button" type="submit" onClick={navigateToHome}>Log In</button>
             <Link className="forgot-password-text-right"to={'/forgot'}>Forgot Password ?</Link>
          
           </form>

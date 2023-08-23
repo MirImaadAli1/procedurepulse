@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios for making API requests
 import { v4 as uuidv4 } from 'uuid';
+import Navbar from './Navbar';
 
 function Makenewsur() {
     const [surveyId, setSurveyId] = useState('');
@@ -78,6 +79,7 @@ function Makenewsur() {
 
     return (
         <div>
+            <Navbar/>
             <h1>Create a New Survey</h1>
             {/* Display the generated surveyId */}
             <p>Generated Survey ID: {surveyId}</p>

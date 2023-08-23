@@ -11,7 +11,7 @@ export default function Navbar() {
         <FontAwesomeIcon icon={faHome} />
       </div>
       <div className="display-menu">
-        <Link className="menu" to={"/"}>Make a Method</Link>
+        <Link className="menu" to={"/makemethod"}>Make a Method</Link>
         <Link className="menu" to={"/"}>Fill a Method</Link>
         <Link className="menu" to={"/"}>Your Methods</Link>
       </div>

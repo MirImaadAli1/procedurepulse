@@ -92,7 +92,7 @@ function Signup() {
     e.preventDefault();
 
     createUserWithEmailAndPassword(auth, email, pwd)
-      .then(async (userCredential) => {
+      .then( (userCredential) => {
         const user = userCredential.user;
         const v1 = USER_REGEX.test(username);
         const uid = user.uid;
@@ -117,7 +117,7 @@ function Signup() {
             console.log("Error sending verification email:", error);
           });
 
-        await setDoc(doc(db, "Users", uid), {
+        setDoc(doc(db, "Users", uid), {
           username: username
         })
       })
@@ -128,9 +128,7 @@ function Signup() {
   };
 
 
-  const navigatToSignIn = () => {
-    window.location.href = "/login";
-  };
+
 
 
 
