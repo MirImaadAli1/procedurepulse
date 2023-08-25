@@ -25,40 +25,45 @@ db.connect((err) => {
   }
 });
 
+
+app.get('/methoddetails/:requiredMethod', (req, res) => {
+  const methodName = req.params.requiredMethod; // Get methodName from URL parameter
+  console.log(methodName);
+
+  // Replace with your actual database query to retrieve method details
+  const query = 'SELECT method_name, method_id, method_maker_name, method_date FROM created_methods WHERE method_name = ?'; // Modify this query
+
+  db.query(query, [methodName], async (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      if (results.length > 0) {
+        const methodDetailsArray = results.map(result => ({
+          method_name: result.method_name,
+          method_id: result.method_id,
+          method_maker_name: result.method_maker_name,
+          method_date: result.method_date
+        // Add more queries or processing as needed
+        }));
+
+
+        console.log(methodDetailsArray);
+        res.json(methodDetailsArray);
+      } else {
+        res.status(404).json({ error: 'Method not found' });
+      }
+    }
+  });
+});
+
+
+
 app.post('/methods', async (req, res) => {
   try {
     const { methodId, userId, methodMaker, methodName, creationDate, questions } = req.body;
 
-  //   const admin = require('firebase-admin');
-  //   const serviceAccount = require('C:/Users/Imaad/Downloads/project1-1ff23-firebase-adminsdk-6qul0-751c2b74be.json');
-
-
-  //   admin.initializeApp({
-  //     credential: admin.credential.cert(serviceAccount),
-  //     databaseURL: 'https://console.firebase.google.com/u/0/project/project1-1ff23/firestore/data/~2FUsers~2F3RXoTlEMoVO7RgGwrtbMS3XWQMS2' // Replace with your Firebase project's database URL
-  // });
-
-  //   const firestoreAdmin = admin.firestore();
-
-  //   const userDocRef = firestoreAdmin.collection('users').doc(userId);
-
-  //   let userData;
-
-  //   firestoreAdmin
-  //   .getDoc(userDocRef)
-  //   .then((docSnapshot) => {
-  //       if (docSnapshot.exists()) {
-  //           const userData = docSnapshot.data();
-  //           console.log('Document data:', userData);
-  //       } else {
-  //           console.log('Document not found');
-  //       }
-  //   })
-  //   .catch((error) => {
-  //       console.log('Error fetching document:', error);
-  //   });
-
-
+    console.log("workingvarible",methodMaker);
 
     // Start a transaction
     await new Promise((resolve, reject) => {
@@ -160,22 +165,22 @@ app.put("/surveyresponses", async (req, res) => {
 });
 
 
-app.get('/surveydetails/:surveyId', (req, res) => {
-  const surveyId = req.params.surveyId; // Get surveyId from URL parameter
+app.get('/surveydetails/:methodId', (req, res) => {
+  const methodId = req.params.methodId; // Get methodId from URL parameter
 
   // Replace with your actual database query to retrieve survey details
-  const query = 'SELECT * FROM surveys WHERE survey_id = ?'; // Modify this query
+  const query = 'SELECT * FROM created_methods WHERE method_id = ?'; // Modify this query
 
-  db.query(query, [surveyId], async (err, results) => {
+  db.query(query, [methodId], async (err, results) => {
     if (err) {
       console.error('Database query error:', err);
       res.status(500).json({ error: 'Database query error' });
     } else {
       if (results.length > 0) {
         const surveyDetails = results[0];
-        const questionsQuery = 'SELECT * FROM questions WHERE survey_id = ?';
+        const questionsQuery = 'SELECT * FROM questions WHERE method_id = ?';
         const questions = await new Promise((resolve, reject) => {
-          db.query(questionsQuery, [surveyId], (err, questionResults) => {
+          db.query(questionsQuery, [methodId], (err, questionResults) => {
             if (err) {
               reject(err);
             } else {

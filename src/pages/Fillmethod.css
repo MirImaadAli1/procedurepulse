@@ -1,0 +1,57 @@
+.fillmethod-main-container {
+    background-image: url('/public/_8a7cf628-0238-4c61-8611-59da7599abcc-transformed.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+
+}
+
+.fillmethod-container {
+    background-color: black;
+    position: relative;
+    margin-left: 48vh;
+    top: 20vh;
+    width: 100vh;
+    height: 60vh;
+    display: flex;
+    /* Use flexbox to center content */
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: last baseline;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    color: white;
+}
+
+.requiredmethod-button {
+    background-color: red;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    padding: 2vh 5vh;
+    border-radius: 2vh;
+    display: inline-block;
+}
+
+.requiredmethod-input {
+    width: 40vh;
+}
+
+.result-container {
+    margin-top: 2vh;
+    display: block;
+
+}
+
+
+.result {
+    background-color: black;
+    border: 1px solid red;
+    padding: 18px;
+    width: 95vh;
+    height: 10vh;
+    /* Set the height to 50% of the viewport height */
+  
+}

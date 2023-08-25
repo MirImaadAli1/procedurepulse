@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navbar() {  
+
+  
   return (
     <div className="nav-bar">
       <div className="logo">
@@ -12,7 +14,7 @@ export default function Navbar() {
       </div>
       <div className="display-menu">
         <Link className="menu" to={"/makemethod"}>Make a Method</Link>
-        <Link className="menu" to={"/"}>Fill a Method</Link>
+        <Link className="menu" to={"/fillmethod"}>Fill a Method</Link>
         <Link className="menu" to={"/"}>Your Methods</Link>
       </div>
       

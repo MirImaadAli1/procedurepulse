@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import ReCAPTCHA from "react-google-recaptcha"; // Import the ReCAPTCHA component
 import './Login.css';
 
 function Login() {
@@ -12,17 +11,9 @@ function Login() {
   const [recaptchaValue, setRecaptchaValue] = useState(null); // Store the reCAPTCHA value
   const navigate = useNavigate();
 
-  const handleRecaptchaChange = (value) => {
-    setRecaptchaValue(value);
-  };
-
   const submitDetails = (e) => {
     e.preventDefault();
 
-    if (!recaptchaValue) {
-      console.log("Please complete the reCAPTCHA");
-      return;
-    }
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
@@ -30,7 +21,7 @@ function Login() {
 
         // Check if the user exists and their email is verified
         if (user && user.emailVerified) {
-          navigate("/home");
+          navigate("/");
         } else if (user && !user.emailVerified) {
           console.log("Please verify your email before logging in.");
         }
@@ -38,12 +29,10 @@ function Login() {
       .catch((error) => {
         console.log(error);
       });
+      
   };
 
-  const navigateToHome = () => {
-    window.location.href = "/";
-  };
-
+ 
   return (
     <div className="si-main-background">
       <div className="sign-in-background">
@@ -62,11 +51,7 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></input>
-            <ReCAPTCHA
-              sitekey="6LcDm6wnAAAAALVjPYwb3YiLiCnyhvmfhFv2zZ8c" // Replace with your reCAPTCHA site key
-              onChange={handleRecaptchaChange}
-            />
-            <button className="si-button" type="submit" onClick={navigateToHome}>Log In</button>
+            <button className="si-button" type="submit">Log In</button>
             <Link className="forgot-password-text-right"to={'/forgot'}>Forgot Password ?</Link>
          
           </form>

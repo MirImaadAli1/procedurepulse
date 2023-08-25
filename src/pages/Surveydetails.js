@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
+import './Surveydetails.css';
 
 const SurveyDetailsPage = () => {
 const location = useLocation();
 const searchParams = new URLSearchParams(location.search);
-const surveyId = searchParams.get("surveyId");
+const methodId = searchParams.get("methodId");
 
-const [surveyData, setSurveyData] = useState(null);
+const [methodData, setMethodId] = useState(null);
 const [responses, setResponses] = useState([]);
 
 const handleResponseChange = (question_id, value) => {
@@ -90,10 +90,10 @@ try {
     photo: response.photo || null, // Send FormData object for photo or null if not provided
   }));
 
-  console.log("Data being sent to server:", { surveyId, responses: formDataResponses });
+  console.log("Data being sent to server:", { methodId, responses: formDataResponses });
 
   const response = await axios.put("http://localhost:8081/surveyresponses", {
-    surveyId,
+    methodId,
     responses: formDataResponses,
   });
 
@@ -105,30 +105,30 @@ try {
 
 
 useEffect(() => {
-fetch(`http://localhost:8081/surveydetails/${surveyId}`)
+fetch(`http://localhost:8081/surveydetails/${methodId}`)
   .then((response) => response.json())
   .then((data) => {
     console.log("Fetched survey data:", data); // Add this line for debugging
-    setSurveyData(data);
+    setMethodId(data);
   })
   .catch((error) => console.error("Error fetching survey details:", error));
-}, [surveyId]);
+}, [methodId]);
 
 
-if (!surveyData) {
+if (!methodData) {
 return <p>Loading...</p>;
 }
 
 return (
 <div>
-  <h2>Welcome to Survey</h2>
+  <h2>Welcome to {methodData.method_name}</h2>
   <div>
-    <p>Survey ID: {surveyData.survey_id}</p>
-    <p>Name: {surveyData.survey_name}</p>
-    <p>Date: {surveyData.survey_date}</p>
-    <p>Maker: {surveyData.survey_maker}</p>
+  <p>Made By: {methodData.method_maker_name}</p>
+    <p>Survey ID: {methodData.method_id}</p>
+    <p>Date: {methodData.method_date}</p>
+
   </div>
-  {surveyData.questions.map((question) => (
+  {methodData.questions.map((question) => (
     <div key={question.question_id}>
       <p>{question.question_text}</p>
       <select onChange={(e) => handleResponseChange(question.question_id, e.target.value)}>

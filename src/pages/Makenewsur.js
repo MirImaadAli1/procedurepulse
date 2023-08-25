@@ -12,7 +12,7 @@ function Makenewsur() {
     const [surveyMakerSignature, setSurveyMakerSignature] = useState('');
     const [creationDate, setCreationDate] = useState(new Date().toISOString().split('T')[0]);
     const [questions, setQuestions] = useState([]);
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState();
 
 
     const handleCreateSurvey = async () => {
@@ -157,7 +157,7 @@ function Makenewsur() {
                     </ul>
                 </div>
 
-                <button onClick={handleCreateSurvey} className='submit-button'>Submit Survey</button>
+                <button onClick={handleCreateSurvey} className='submit-button'>Submit Method</button>
             </div>
         </div>
     );
