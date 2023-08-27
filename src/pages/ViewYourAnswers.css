@@ -1,0 +1,56 @@
+.vya-main-container {
+    background-image: url('/public/vq.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.vya-method-container {
+    background-color: black;
+    position: relative;
+    margin-left: 48vh;
+    top: 12vh;
+    width: 100vh;
+    height: 60vh;
+    display: flex;
+    /* Use flexbox to center content */
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: last baseline;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    color: white;
+    overflow-y: auto;
+
+}
+
+/* Style for the bordered container */
+.vya-bordered-container {
+    border: 0.1px solid #ccc;
+    /* Border color and thickness */
+    padding: 1.5vh;
+    /* Padding inside the container */
+    width: 90vh;
+    margin-bottom: 2vh;
+    /* Margin between containers */
+}
+
+/* Style for the "Question X" label */
+.vya-bordered-container p:first-child {
+    font-weight: bolder;
+    /* Make the label bold */
+    margin: 0;
+    /* Remove any default margins */
+}
+
+/* Style for the question text */
+.vya-bordered-container p:last-child {
+    margin-top: 5px;
+    /* Add some space between the label and question text */
+}
+
+.question-class{
+    font-weight: bold;
+}

@@ -1,0 +1,40 @@
+.vr-main-container {
+    background-image: url('/public/methodsmadebyyou.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+
+}
+
+.vr-method-list {
+    background-color: black;
+    color: white;
+    display: flex;
+    /* Use flexbox to center content */
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: last baseline;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    position: relative;
+    top: 2vh;
+    width: 80vh;
+    margin-left: 58vh;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    overflow-y: auto;
+    height: 70vh;
+
+
+}
+
+
+.vr-method-item-container {    
+    border: 0.5vh solid #ccc;
+    padding: 2vh;
+    width: 60vh;
+    /* Change cursor to pointer to indicate clickability */
+    /* Add any additional custom styles here */
+}

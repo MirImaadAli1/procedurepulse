@@ -1,0 +1,19 @@
+.method-item{
+    padding-top: 3vh;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.clickable-text{
+    cursor: pointer;
+    color: red;
+
+}
+
+.clickable-text:hover {
+    color: darkgray;
+}

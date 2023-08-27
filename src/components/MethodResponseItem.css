@@ -1,0 +1,19 @@
+.mr-method-item{
+    padding-top: 3vh;
+}
+
+.mr-action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.mr-clickable-text{
+    cursor: pointer;
+    color: red;
+
+}
+
+.mr-clickable-text:hover {
+    color: darkgray;
+}

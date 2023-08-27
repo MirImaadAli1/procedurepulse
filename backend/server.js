@@ -44,7 +44,7 @@ app.get('/methoddetails/:requiredMethod', (req, res) => {
           method_id: result.method_id,
           method_maker_name: result.method_maker_name,
           method_date: result.method_date
-        // Add more queries or processing as needed
+          // Add more queries or processing as needed
         }));
 
 
@@ -63,7 +63,7 @@ app.post('/methods', async (req, res) => {
   try {
     const { methodId, userId, methodMaker, methodName, creationDate, questions } = req.body;
 
-    console.log("workingvarible",methodMaker);
+    console.log("workingvarible", methodMaker);
 
     // Start a transaction
     await new Promise((resolve, reject) => {
@@ -110,11 +110,11 @@ app.post('/methods', async (req, res) => {
 
 // Import necessary modules
 
-app.put("/surveyresponses", async (req, res) => {
-  const { surveyId, responses } = req.body;
+app.post("/surveyresponses", async (req, res) => {
+  const { responseId, responderUserId, methodMakerUserId, methodId, methodName, responseDate, responses } = req.body;
 
   try {
-    console.log("Updating responses and photos...");
+    console.log("Inserting or updating responses and photos...");
 
     await new Promise((resolve, reject) => {
       db.beginTransaction((err) => {
@@ -126,22 +126,103 @@ app.put("/surveyresponses", async (req, res) => {
       });
     });
 
-    const updateResponseQuery = `
-    UPDATE questions
-    SET answer = ?, comments = ?, upload_photo = ?
-    WHERE survey_id = ? AND question_id = ?
-  `;
+    const checkQuery = `SELECT * from responses where responder_user_id = ? AND method_responded_id =?`;
+
+    const checkQueryParams = [responderUserId, methodId];
+
+    db.query(checkQuery, checkQueryParams, async (err, results) => {
+      if (err) {
+        console.error('Database query error:', err);
+        res.status(500).json({ error: 'Database query error' });
+      } else {
+        if (results.length > 0) {
+
+          const updateResponseQuery = `UPDATE responses
+          SET 
+              responded_to_id = ?,
+              method_responded_name = ?,
+              response_date = ?
+          WHERE responder_user_id = ? AND method_responded_id = ?
+        `;
+
+          const updateResponseParams = [methodMakerUserId, methodName, responseDate, responderUserId, methodId];
+
+          await db.query(updateResponseQuery, updateResponseParams);
+
+
+
+
+
+        } else {
+          // Insert the response details into the responses table
+          const insertResponseQuery = `
+              INSERT INTO responses (response_id, responder_user_id, responded_to_id, method_responded_id, method_responded_name, response_date)
+              VALUES (?, ?, ?, ?, ?, ?)
+
+          `;
+
+          // Use this query in your code to insert or update responses.
+
+
+          const insertResponseParams = [responseId, responderUserId, methodMakerUserId, methodId, methodName, responseDate];
+
+          await db.query(insertResponseQuery, insertResponseParams);
+        }
+      }
+    });
+
+    // Insert or update answers in the answers table
+    const insertAnswerQuery = `
+          INSERT INTO answers (response_id, responder_user_id, method_responded_id, question_id, question_text, answer, comments, photo_upload)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          `;
 
     await Promise.all(
       responses.map(async (response) => {
-        const { question_id, answer, comments, photo } = response;
-        console.log(`Updating response for question ID ${question_id}`);
+        const { question_id, question_text, answer_text, comments, photo_upload } = response;
+        console.log(`Inserting or updating response for question ID ${question_id}`);
 
-        const queryParams = [answer, comments, photo, surveyId, question_id];
+        const queryParams = [responseId, responderUserId, methodId, question_id, question_text, answer_text, comments, photo_upload];
 
-        await db.query(updateResponseQuery, queryParams);
+       
+        try {
+           // Check if a row with the same response_id, responder_user_id, method_responded_id, and question_id exists
+            const checkAnswerQuery = `
+            SELECT * FROM answers
+            WHERE responder_user_id = ? AND method_responded_id = ?
+          `;
+          console.log("responder user id ", responderUserId);
+          console.log("method id ", methodId)
+          const checkAnswerParams = [responderUserId, methodId];
 
-        console.log(`Updated response for question ID ${question_id}`);
+          const existingAnswer = await db.query(checkAnswerQuery, checkAnswerParams);
+          console.log(existingAnswer.length);
+
+          if (existingAnswer.length > 0) {
+            // If a matching row exists, update it
+            const updateAnswerQuery = `
+              UPDATE answers
+              SET
+                question_text = ?,
+                answer = ?,
+                comments = ?,
+                photo_upload = ?
+              WHERE responder_user_id = ? AND method_responded_id = ? 
+            `;
+
+            const updateAnswerParams = [question_id, question_text, answer_text, comments, photo_upload, responderUserId, methodId];
+
+            db.query(updateAnswerQuery, updateAnswerParams);
+          } else {
+            // If no matching row exists, insert a new row
+            await db.query(insertAnswerQuery, queryParams);
+          }
+
+          console.log(`Inserted or updated response for question ID ${question_id}`);
+        } catch (error) {
+          console.error('Error inserting or updating response:', error);
+          // Handle the error appropriately
+        }
       })
     );
 
@@ -155,14 +236,16 @@ app.put("/surveyresponses", async (req, res) => {
       });
     });
 
-    console.log("Responses and photos updated successfully");
-    res.json({ message: "Responses and photos updated successfully" });
+    console.log("Responses and photos inserted or updated successfully");
+    res.json({ message: "Responses and photos inserted or updated successfully" });
   } catch (error) {
-    console.error("Error updating responses and photos:", error);
+    console.error("Error inserting or updating responses and photos:", error);
     await new Promise((resolve) => db.rollback(() => resolve()));
-    res.status(500).json({ error: "Error updating responses and photos" });
+    res.status(500).json({ error: "Error inserting or updating responses and photos" });
   }
 });
+
+
 
 
 app.get('/surveydetails/:methodId', (req, res) => {
@@ -189,6 +272,7 @@ app.get('/surveydetails/:methodId', (req, res) => {
           });
         });
         surveyDetails.questions = questions;
+        console.log("means backend is working",surveyDetails);
         res.json(surveyDetails);
       } else {
         res.status(404).json({ error: 'Survey not found' });
@@ -197,6 +281,155 @@ app.get('/surveydetails/:methodId', (req, res) => {
   });
 });
 
+app.get('/methods/:userId', (req, res) => {
+  const userId = req.params.userId; // Get userId from URL parameter
+
+  // Replace with your actual database query to retrieve survey details
+  const query = 'SELECT * FROM created_methods WHERE method_maker_id = ?'; // Modify this query
+
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      if (results.length > 0) {
+        const methodsArray = [];
+         // Iterate through the database results and create an object for each method
+         results.forEach((row) => {
+          const method = {
+            methodId: row.method_id, // Customize these fields based on your database schema
+            methodName: row.method_name,
+            methodDate: row.method_date
+          };
+
+          // Push the method object into the methodsArray
+          methodsArray.push(method);
+        });
+        console.log("thearray",methodsArray);
+        res.json(methodsArray);
+        // const existingMethods = results[0];
+        // res.json(existingMethods);
+      } else {
+        res.status(404).json({ error: 'Survey not found' });
+      }
+    }
+  });
+});
+
+
+app.get('/responses/:methodId', (req, res) => {
+  const methodId = req.params.methodId; // Get methodId from URL parameter
+
+  // Replace with your actual database query to retrieve survey details
+  const query = 'SELECT * FROM responses WHERE method_responded_id = ?'; // Modify this query
+
+  db.query(query, [methodId], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      if (results.length > 0) {
+        const methodsArray = [];
+         // Iterate through the database results and create an object for each method
+         results.forEach((row) => {
+          const method = {
+            responseid: row.response_id,
+            responderId: row.responder_user_id, // Customize these fields based on your database schema
+            responseDate: row.response_date,
+          };
+
+          // Push the method object into the methodsArray
+          methodsArray.push(method);
+        });
+        console.log("thearray",methodsArray);
+        res.json(methodsArray);
+        // const existingMethods = results[0];
+        // res.json(existingMethods);
+      } else {
+        res.status(404).json({ error: 'Survey not found' });
+      }
+    }
+  });
+});
+
+
+app.get('/answers/:responseId', (req, res) => {
+  const responseId = req.params.responseId; // Get responseId from URL parameter
+
+  // Replace with your actual database query to retrieve survey details
+  const query = 'SELECT * FROM answers WHERE response_id = ?'; // Modify this query
+
+  db.query(query, [responseId], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      if (results.length > 0) {
+        const answersArray = [];
+         // Iterate through the database results and create an object for each method
+         results.forEach((row) => {
+          const answers = {
+            responderid: row.responder_user_id,
+            question_id: row.question_id,
+            question: row.question_text,
+            answer: row.answer, // Customize these fields based on your database schema
+            comments: row.comments,
+            photo: row.photo_upload
+          };
+
+
+          // Push the answers object into the answersArray
+          answersArray.push(answers);
+        });
+        console.log("thearray",answersArray);
+        res.json(answersArray);
+        // const existingMethods = results[0];
+        // res.json(existingMethods);
+      } else {
+        res.status(404).json({ error: 'Survey not found' });
+      }
+    }
+  });
+});
+
+
+app.get('/yourrespondedmethods/:userId', (req, res) => {
+  const userId = req.params.userId; // Get userId from URL parameter
+
+  // Replace with your actual database query to retrieve survey details
+  const query = 'SELECT * FROM responses WHERE responder_user_id = ?'; // Modify this query
+
+  db.query(query, [userId], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      res.status(500).json({ error: 'Database query error' });
+    } else {
+      if (results.length > 0) {
+        const yourResponseArray = [];
+         // Iterate through the database results and create an object for each method
+         results.forEach((row) => {
+          const answers = {
+            responseid: row.response_id,
+            respondedUserId: row.responded_to_id,
+            methodId: row.method_responded_id,
+            methodName: row.method_responded_name, // Customize these fields based on your database schema
+            responseDate: row.response_date
+          };
+
+
+          // Push the answers object into the yourResponseArray
+          yourResponseArray.push(answers);
+        });
+        console.log("thearray",yourResponseArray);
+        res.json(yourResponseArray);
+        // const existingMethods = results[0];
+        // res.json(existingMethods);
+      } else {
+        res.status(404).json({ error: 'Survey not found' });
+      }
+    }
+  });
+});
 
 app.listen(8081, () => {
   console.log('Backend server is running on port 8081');

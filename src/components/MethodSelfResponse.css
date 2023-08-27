@@ -1,0 +1,19 @@
+.ymr-method-item{
+    padding-top: 3vh;
+}
+
+.ymr-action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.ymr-clickable-text{
+    cursor: pointer;
+    color: red;
+
+}
+
+.ymr-clickable-text:hover {
+    color: darkgray;
+}

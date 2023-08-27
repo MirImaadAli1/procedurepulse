@@ -1,0 +1,77 @@
+.vq-main-container {
+    background-image: url('/public/vq.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.vqmethod-container {
+    background-color: black;
+    position: relative;
+    margin-left: 48vh;
+    top: 12vh;
+    width: 100vh;
+    height: 60vh;
+    display: flex;
+    /* Use flexbox to center content */
+    flex-direction: column;
+    /* Stack content vertically */
+    justify-content: last baseline;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    color: white;
+    overflow-y: auto;
+
+}
+
+/* Style for the bordered container */
+.vqbordered-container {
+    border: 0.1px solid #ccc;
+    /* Border color and thickness */
+    padding: 1.5vh;
+    /* Padding inside the container */
+    width: 90vh;
+    margin-bottom: 2vh;
+    /* Margin between containers */
+}
+
+/* Style for the "Question X" label */
+.vqbordered-container p:first-child {
+    font-weight: bold;
+    /* Make the label bold */
+    margin: 0;
+    /* Remove any default margins */
+}
+
+/* Style for the question text */
+.vqbordered-container p:last-child {
+    margin-top: 5px;
+    /* Add some space between the label and question text */
+}
+
+.info-container {
+    display: flex;
+    /* Enable flexbox layout */
+    justify-content: space-between;
+    /* Push items to opposite ends */
+    width: 90vh;
+    margin-bottom: 1vh;
+}
+
+/* Style for the "Made By" section */
+.made-by {
+    flex: 1;
+    font-weight: bolder;
+    /* Expand to fill available space */
+}
+
+/* Style for the "Date" section */
+.date {
+    flex: 1;
+    /* Expand to fill available space */
+    font-weight: bolder;
+    text-align: right;
+    /* Right-align the text in this section */
+}
