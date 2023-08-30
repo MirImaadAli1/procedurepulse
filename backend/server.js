@@ -67,7 +67,7 @@ app.post('/methods', async (req, res) => {
 
     // Start a transaction
     await new Promise((resolve, reject) => {
-      db.beginTransaction((err) => {
+      db.beginTransaction(async (err) => {
         if (err) {
           reject(err);
         } else {
@@ -139,13 +139,14 @@ app.post("/surveyresponses", async (req, res) => {
 
           const updateResponseQuery = `UPDATE responses
           SET 
+              response_id = ?,
               responded_to_id = ?,
               method_responded_name = ?,
               response_date = ?
           WHERE responder_user_id = ? AND method_responded_id = ?
         `;
 
-          const updateResponseParams = [methodMakerUserId, methodName, responseDate, responderUserId, methodId];
+          const updateResponseParams = [responseId, methodMakerUserId, methodName, responseDate, responderUserId, methodId];
 
           await db.query(updateResponseQuery, updateResponseParams);
 
@@ -366,31 +367,30 @@ app.get('/answers/:responseId', (req, res) => {
     } else {
       if (results.length > 0) {
         const answersArray = [];
-         // Iterate through the database results and create an object for each method
-         results.forEach((row) => {
+
+        // Iterate through the database results and create an object for each method
+        results.forEach((row) => {
           const answers = {
             responderid: row.responder_user_id,
             question_id: row.question_id,
             question: row.question_text,
             answer: row.answer, // Customize these fields based on your database schema
             comments: row.comments,
-            photo: row.photo_upload
+            photo: row.photo_upload // Convert Buffer to Base64
           };
-
 
           // Push the answers object into the answersArray
           answersArray.push(answers);
         });
-        console.log("thearray",answersArray);
+
         res.json(answersArray);
-        // const existingMethods = results[0];
-        // res.json(existingMethods);
       } else {
         res.status(404).json({ error: 'Survey not found' });
       }
     }
   });
 });
+
 
 
 app.get('/yourrespondedmethods/:userId', (req, res) => {

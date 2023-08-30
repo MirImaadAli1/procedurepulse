@@ -55,26 +55,23 @@ const SurveyDetailsPage = () => {
     });
   };
 
-  const handlePhotoChange = (question_id, photo) => {
+const handlePhotoChange = (question_id, photo) => {
     const reader = new FileReader();
 
     reader.onload = () => {
-      const data = new Uint8Array(reader.result);
-
-      // Convert binary data to a binary string
-      const binaryString = data.reduce((str, byte) => str + String.fromCharCode(byte), '');
+      const base64String = reader.result.split(',')[1]; // Extract the Base64 data
 
       setResponses(prevResponses => {
         const updatedResponses = prevResponses.map(response => {
           if (response.question_id === question_id) {
-            return { ...response, photo: binaryString };
+            return { ...response, photo: base64String };
           }
           return response;
         });
 
         // If no existing response was found, initialize a new response
         if (!updatedResponses.some(response => response.question_id === question_id)) {
-          updatedResponses.push({ question_id: question_id, answer: "", comments: "", photo: binaryString });
+          updatedResponses.push({ question_id: question_id, answer: "", comments: "", photo: base64String });
           console.log("New response added");
         }
 
@@ -82,8 +79,8 @@ const SurveyDetailsPage = () => {
       });
     };
 
-    reader.readAsArrayBuffer(photo);
-  };
+    reader.readAsDataURL(photo); // Read as Data URL
+};
 
 
 
@@ -142,7 +139,7 @@ const SurveyDetailsPage = () => {
     fetch(`http://localhost:8081/surveydetails/${methodId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched survey data:", data); // Add this line for debugging
+        console.log("Fetched survey data:", data); 
         setMethodId(data);
       })
       .catch((error) => console.error("Error fetching survey details:", error));

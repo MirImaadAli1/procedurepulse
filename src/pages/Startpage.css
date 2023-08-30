@@ -41,16 +41,6 @@
     background-color: darkred;
 }
 
-.signinsignup{
-  position: relative;
-  top: 10px; /* Adjust the top position as needed */
-  right: 10px; /* Adjust the right position as needed */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  top: -639px;
-  margin-left: 1700px;
-}
 
 .signup-button{
   background-color: red;

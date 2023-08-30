@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios for making API requests
 import { v4 as uuidv4 } from 'uuid';
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import Navbar from './Navbar';
-import './Makenewsur.css';
+import './Makenewsur.css';  
+
 
 function Makenewsur() {
     const [methodId, setMethodId] = useState('');
@@ -12,7 +13,70 @@ function Makenewsur() {
     const [surveyMakerSignature, setSurveyMakerSignature] = useState('');
     const [creationDate, setCreationDate] = useState(new Date().toISOString().split('T')[0]);
     const [questions, setQuestions] = useState([]);
-    const [username, setUsername] = useState();
+    const [username, setUsername] = useState(null);
+    const [loading, setLoading] = useState(true); // Add loading state
+
+
+
+    useEffect(() => {
+        // Create an authentication state change listener
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            // if (user) {
+            //     try {
+            //         const userId = user.uid;
+            //         const response = await fetch(`http://localhost:8081/methods/${userId}`);
+            //         if (response.ok) {
+            //             const data = await response.json();
+            //             setMethods(data);
+            //         } else {
+            //             console.error('Error fetching data:', response.statusText);
+            //         }
+            //     } catch (error) {
+            //         console.error('Error fetching data:', error);
+            //     } finally {
+            //         setLoading(false); // Set loading to false once the data is fetched or in case of an error
+            //     }
+                
+                // Fetch the username when the user is authenticated
+                const uid = user.uid;
+                const docRef = doc(db, "Users", uid);
+
+                try {
+                    // Fetch the document
+                    const docSnapshot = await getDoc(docRef);
+
+                    if (docSnapshot.exists()) {
+                        const data = docSnapshot.data();
+                        const fetchedUsername = data.username;
+                        console.log("Document data:", data);
+
+                        // Set the username here
+                        setUsername(fetchedUsername);
+                        setLoading(false);
+                    } else {
+                        setLoading(false);
+                        console.log("Document does not exist.");
+                    }
+                } catch (error) {
+                    setLoading(false);
+                    console.error("Error fetching document:", error);
+                }
+            // } else {
+            //     setLoading(false); // Set loading to false if the user is not authenticated
+            // }
+        });
+
+        // Clean up the listener when the component unmounts
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+
+    if (loading) {
+        // Show a loading indicator until the username is fetched
+        return <div>Loading...</div>;
+    }
 
 
     const handleCreateSurvey = async () => {
@@ -20,29 +84,28 @@ function Makenewsur() {
         const user = auth.currentUser;
         const uniqueIdentifier = uuidv4();
         const uid = user.uid;
+
         let idExists = false;
 
-        const docRef = doc(db, "Users", uid);
+        // const docRef = doc(db, "Users", uid);
 
-        let data;
+        // try {
+        //     // Fetch the document
+        //     const docSnapshot = await getDoc(docRef);
 
-        // Fetch the document
-        getDoc(docRef)
-            .then((docSnapshot) => {
-                if (docSnapshot.exists()) {
-                    const data = docSnapshot.data();
-                    const fetchedUsername = data.username;
-                    console.log("Document data:", data);
+        //     if (docSnapshot.exists()) {
+        //         const data = docSnapshot.data();
+        //         const fetchedUsername = data.username;
+        //         console.log("Document data:", data);
 
-                    setUsername(fetchedUsername);
-                } else {
-                    console.log("Document does not exist.");
-                }
-            })
-            .catch((error) => {
-                console.error("Error fetching document:", error);
-            });
-
+        //         // Set the username here
+        //         await setUsername(fetchedUsername);
+        //     } else {
+        //         console.log("Document does not exist.");
+        //     }
+        // } catch (error) {
+        //     console.error("Error fetching document:", error);
+        // }
 
 
         // Check if the generated ID already exists in the database
@@ -107,6 +170,8 @@ function Makenewsur() {
             return updatedQuestions;
         });
     };
+
+    console.log("this username", username)
 
     return (
         <div className='mn-main-container'>

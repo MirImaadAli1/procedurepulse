@@ -15,9 +15,7 @@ const Startpage = () => {
             </p>
           </div>
           <Link to="/makeanewsur" className='make-survey-button'>Make a Survey</Link>
-          <div className='signinsignup'>
-            <Link to="/signup" className='signup-button'>Sign Up/Sign In</Link>
-          </div>
+          
         </div>
     </div>
   );
