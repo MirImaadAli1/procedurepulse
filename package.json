@@ -12,6 +12,7 @@
     "axios": "^1.4.0",
     "firebase": "^10.3.0",
     "font-awesome": "^4.7.0",
+    "framer-motion": "^10.16.2",
     "image-compressor": "^2.0.3",
     "mysql": "^2.18.1",
     "react": "^18.2.0",
@@ -30,7 +31,6 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
       "react-app/jest"
     ]
   },

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import AnimatedPage from '../components/AnimatedPage';
 import './Login.css';
 
 function Login() {
@@ -29,35 +30,37 @@ function Login() {
       .catch((error) => {
         console.log(error);
       });
-      
+
   };
 
- 
+
   return (
-    <div className="si-main-background">
-      <div className="sign-in-background">
-        <div className="sign-in-container">
-          <form onSubmit={submitDetails}>
-            <h1>Log in to your Account</h1>
-            <input
-              type="email"
-              placeholder="Enter your email here"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-            <input
-              type="password"
-              placeholder="Enter your password here"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></input>
-            <button className="si-button" type="submit">Log In</button>
-            <Link className="forgot-password-text-right"to={'/forgot'}>Forgot Password ?</Link>
-         
-          </form>
+    <AnimatedPage>
+      <div className="si-main-background">
+        <div className="sign-in-background">
+          <div className="sign-in-container">
+            <form onSubmit={submitDetails}>
+              <h1>Log in to your Account</h1>
+              <input
+                type="email"
+                placeholder="Enter your email here"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+              <input
+                type="password"
+                placeholder="Enter your password here"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+              <button className="si-button" type="submit">Log In</button>
+              <Link className="forgot-password-text-right" to={'/forgot'}>Forgot Password ?</Link>
+
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </AnimatedPage>
   );
 }
 

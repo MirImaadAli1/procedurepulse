@@ -112,15 +112,15 @@ export default function Navbar() {
           Your Methods
           {isMethodsDropdownOpen && (
             <div className="dropdown-content">
-              <div onClick={() => handleLinkClick("/mademethod")} className="dropdown-item">Methods Made by You</div>
-              <div onClick={() => handleLinkClick("/filledmethods")} className="dropdown-item">Methods Filled by You</div>
+              <div onClick={() => handleLinkClick("/mademethod")} className="dropdown-item">Created By Me</div>
+              <div onClick={() => handleLinkClick("/filledmethods")} className="dropdown-item">My Responses</div>
             </div>
           )}
         </div>
         <div className='signinsignup'>
           {isAuthenticated ? (
             <div className="dropdown">
-              <button onClick={toggleUserDropdown}>
+              <button onClick={toggleUserDropdown} className="user-logo">
                 <FontAwesomeIcon icon={faUser} />
               </button>
               {isUserDropdownOpen && (

@@ -4,6 +4,7 @@ import './Viewresponses.css'
 import { auth } from '../firebase';
 import MethodResponseItem from '../components/MethodResponseItem';
 import { useLocation } from 'react-router-dom';
+import AnimatedPage from '../components/AnimatedPage';
 
 
 
@@ -34,24 +35,27 @@ function Viewresponses() {
     }
 
 
+    
     return (
-        <div className='vr-main-container'>
-            <Navbar />
-            <div className='vr-method-list'>
-                <h2>Responses To Your Method</h2>
-                {methods.map((method) => (
-                    <div
-                        key={method.responseid}
-                        className='vr-method-item-container'
-                    // onClick={() => handleMethodClick(method)}
-                    >
-                        <MethodResponseItem method={method} />
-                    </div>
-                ))}
+        <AnimatedPage>
+            <div className='vr-main-container'>
+                <Navbar />
+                <div className='vr-method-list'>
+                    <h2>Responses To Your Method</h2>
+                    {methods.map((method) => (
+                        <div
+                            key={method.responseid}
+                            className='vr-method-item-container'
+                        // onClick={() => handleMethodClick(method)}
+                        >
+                            <MethodResponseItem method={method} />
+                        </div>
+                    ))}
+
+                </div>
 
             </div>
-
-        </div>
+        </AnimatedPage>
     )
 }
 

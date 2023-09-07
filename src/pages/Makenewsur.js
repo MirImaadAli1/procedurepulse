@@ -4,10 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import Navbar from './Navbar';
-import './Makenewsur.css';  
+import './Makenewsur.css';
+import AnimatedPage from '../components/AnimatedPage';
+import Modal from '../components/Modal';
 
 
 function Makenewsur() {
+    const [showModal, setShowModal] = useState(false);
     const [methodId, setMethodId] = useState('');
     const [methodName, setMethodName] = useState('');
     const [surveyMakerSignature, setSurveyMakerSignature] = useState('');
@@ -36,31 +39,31 @@ function Makenewsur() {
             //     } finally {
             //         setLoading(false); // Set loading to false once the data is fetched or in case of an error
             //     }
-                
-                // Fetch the username when the user is authenticated
-                const uid = user.uid;
-                const docRef = doc(db, "Users", uid);
 
-                try {
-                    // Fetch the document
-                    const docSnapshot = await getDoc(docRef);
+            // Fetch the username when the user is authenticated
+            const uid = user.uid;
+            const docRef = doc(db, "Users", uid);
 
-                    if (docSnapshot.exists()) {
-                        const data = docSnapshot.data();
-                        const fetchedUsername = data.username;
-                        console.log("Document data:", data);
+            try {
+                // Fetch the document
+                const docSnapshot = await getDoc(docRef);
 
-                        // Set the username here
-                        setUsername(fetchedUsername);
-                        setLoading(false);
-                    } else {
-                        setLoading(false);
-                        console.log("Document does not exist.");
-                    }
-                } catch (error) {
+                if (docSnapshot.exists()) {
+                    const data = docSnapshot.data();
+                    const fetchedUsername = data.username;
+                    console.log("Document data:", data);
+
+                    // Set the username here
+                    setUsername(fetchedUsername);
                     setLoading(false);
-                    console.error("Error fetching document:", error);
+                } else {
+                    setLoading(false);
+                    console.log("Document does not exist.");
                 }
+            } catch (error) {
+                setLoading(false);
+                console.error("Error fetching document:", error);
+            }
             // } else {
             //     setLoading(false); // Set loading to false if the user is not authenticated
             // }
@@ -86,27 +89,6 @@ function Makenewsur() {
         const uid = user.uid;
 
         let idExists = false;
-
-        // const docRef = doc(db, "Users", uid);
-
-        // try {
-        //     // Fetch the document
-        //     const docSnapshot = await getDoc(docRef);
-
-        //     if (docSnapshot.exists()) {
-        //         const data = docSnapshot.data();
-        //         const fetchedUsername = data.username;
-        //         console.log("Document data:", data);
-
-        //         // Set the username here
-        //         await setUsername(fetchedUsername);
-        //     } else {
-        //         console.log("Document does not exist.");
-        //     }
-        // } catch (error) {
-        //     console.error("Error fetching document:", error);
-        // }
-
 
         // Check if the generated ID already exists in the database
         while (idExists) {
@@ -138,7 +120,7 @@ function Makenewsur() {
             // Make a POST request to your backend API to create the survey
             const response = await axios.post('http://localhost:8081/methods', surveyData);
             console.log(response.data);
-
+            setShowModal(true);
             // Reset state
             setMethodName('');
             setSurveyMakerSignature('');
@@ -174,22 +156,23 @@ function Makenewsur() {
     console.log("this username", username)
 
     return (
-        <div className='mn-main-container'>
-            <Navbar />
-            <div className='mn-container'>
+        <AnimatedPage>
+            <div className='mn-main-container'>
+                <Navbar />
+                <div className='mn-container'>
 
-                <h1>Create a New Method</h1>
-                {/* Display the generated methodId */}
+                    <h1>Create a New Method</h1>
+                    {/* Display the generated methodId */}
 
-                <label htmlFor="methodName">Method Name:</label>
-                <input className='makemethod-input'
-                    type="text"
-                    id="methodName"
-                    value={methodName}
-                    onChange={e => setMethodName(e.target.value)}
-                />
+                    <label htmlFor="methodName">Method Name:</label>
+                    <input className='makemethod-input'
+                        type="text"
+                        id="methodName"
+                        value={methodName}
+                        onChange={e => setMethodName(e.target.value)}
+                    />
 
-                {/* <label htmlFor="surveyMakerSignature">Survey Maker's Signature:</label>
+                    {/* <label htmlFor="surveyMakerSignature">Survey Maker's Signature:</label>
             <input
                 type="text"
                 id="surveyMakerSignature"
@@ -197,34 +180,36 @@ function Makenewsur() {
                 onChange={e => setSurveyMakerSignature(e.target.value)}
             /> */}
 
-                <label htmlFor="creationDate">Creation Date:</label>
-                <input className='makemethod-input'
-                    type="date"
-                    id="creationDate"
-                    value={creationDate}
-                    onChange={e => setCreationDate(e.target.value)}
-                />
+                    <label htmlFor="creationDate">Creation Date:</label>
+                    <input className='makemethod-input'
+                        type="date"
+                        id="creationDate"
+                        value={creationDate}
+                        onChange={e => setCreationDate(e.target.value)}
+                    />
 
-                <h2>Add Questions</h2>
-                <label htmlFor="questionText">Question Text:</label>
-                <input type="text" id="questionText" className='makemethod-input' />
-                <button onClick={handleAddQuestion} className='add-question-button'>Add Question</button>
+                    <h2>Add Questions</h2>
+                    <label htmlFor="questionText">Question Text:</label>
+                    <input type="text" id="questionText" className='makemethod-input' />
+                    <button onClick={handleAddQuestion} className='add-question-button'>Add Question</button>
 
-                <div>
-                    <h2>Method Questions</h2>
-                    <ul>
-                        {questions.map((question, index) => (
-                            <li key={index} className='makemethod-li'>
-                                {question.text}
-                                <button onClick={() => handleRemoveQuestion(index)} className='add-question-button'>Remove</button>
-                            </li>
-                        ))}
-                    </ul>
+                    <div>
+                        <h2>Method Questions</h2>
+                        <ul className='list-questions'>
+                            {questions.map((question, index) => (
+                                <li key={index} className='makemethod-li'>
+                                    {question.text}
+                                    <button onClick={() => handleRemoveQuestion(index)} className='add-question-button'>Remove</button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <button onClick={handleCreateSurvey} className='submit-button'>Submit Method</button>
+                    <Modal show={showModal} onClose={() => setShowModal(false)} />
                 </div>
-
-                <button onClick={handleCreateSurvey} className='submit-button'>Submit Method</button>
             </div>
-        </div>
+        </AnimatedPage>
     );
 }
 

@@ -11,17 +11,27 @@
     background-color: black;
     color: white;
     position: relative;
-    width: 100vh;
+    width: 110vh;
     margin-left: 40vh;
     padding: 10vh;
     top: 10vh;
 }
 
+label{
+    font-size: 20px;
+}
+
+.list-questions{
+    font-size: 25px;
+}
+
+
 .add-question-button{
     background-color: red;
     margin-left: 2vh;
+    font-size: 20px;
     color: black;
-    font-weight: bolder;
+    
 }
 
 .makemethod-input{
@@ -43,4 +53,8 @@ li{
     padding: 2vh 5vh;
     border-radius: 2vh;
     display: inline-block;
+}
+
+h1{
+    font-size: 30px;
 }

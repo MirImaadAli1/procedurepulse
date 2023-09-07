@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import './Mademethods.css'
 import { auth } from '../firebase';
 import MethodItem from '../components/MethodItem';
+import AnimatedPage from '../components/AnimatedPage';
 
 
 
@@ -45,23 +46,25 @@ function Mademethods() {
     }
 
     return (
-        <div className='mm-main-container'>
-            <Navbar />
-            <div className='method-list'>
-                <h2>Your Methods</h2>
-                {methods.map((method) => (
-                    <div
-                        key={method.methodId}
-                        className='method-item-container'
-                    // onClick={() => handleMethodClick(method)}
-                    >
-                        <MethodItem method={method} />
-                    </div>
-                ))}
+        <AnimatedPage>
+            <div className='mm-main-container'>
+                <Navbar />
+                <div className='method-list'>
+                    <h2>Your Methods</h2>
+                    {methods.map((method) => (
+                        <div
+                            key={method.methodId}
+                            className='method-item-container'
+                        // onClick={() => handleMethodClick(method)}
+                        >
+                            <MethodItem method={method} />
+                        </div>
+                    ))}
+
+                </div>
 
             </div>
-
-        </div>
+        </AnimatedPage>
     )
 }
 

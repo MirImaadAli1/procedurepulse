@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.a6387d14.css",
+    "main.js": "/static/js/main.11a5f705.js",
+    "static/js/787.a3b526ee.chunk.js": "/static/js/787.a3b526ee.chunk.js",
+    "static/media/signupbg.jpeg": "/static/media/signupbg.eb561ff1c5f65e6262d1.jpeg",
+    "static/media/makenewmethod.jpeg": "/static/media/makenewmethod.c341eb909e3c016b9d6a.jpeg",
+    "static/media/_8a7cf628-0238-4c61-8611-59da7599abcc-transformed.jpeg": "/static/media/_8a7cf628-0238-4c61-8611-59da7599abcc-transformed.853b7e1207773cb1a15e.jpeg",
+    "static/media/methodsmadebyyou.jpeg": "/static/media/methodsmadebyyou.f14389e009f07b6c9d8a.jpeg",
+    "static/media/vq.jpeg": "/static/media/vq.7b7acd0b63761869c3e3.jpeg",
+    "static/media/_a8ceaff6-11b3-446c-bda7-d1b0cf82bf62-transformed.jpeg": "/static/media/_a8ceaff6-11b3-446c-bda7-d1b0cf82bf62-transformed.99bc8c84e78bc1b4fe58.jpeg",
+    "static/media/method-details.jpeg": "/static/media/method-details.d6c38f5c6724d805f619.jpeg",
+    "index.html": "/index.html",
+    "main.a6387d14.css.map": "/static/css/main.a6387d14.css.map",
+    "main.11a5f705.js.map": "/static/js/main.11a5f705.js.map",
+    "787.a3b526ee.chunk.js.map": "/static/js/787.a3b526ee.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a6387d14.css",
+    "static/js/main.11a5f705.js"
+  ]
+}

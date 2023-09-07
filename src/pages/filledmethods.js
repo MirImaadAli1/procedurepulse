@@ -5,10 +5,10 @@ import { auth } from '../firebase';
 import { useState, useEffect } from 'react';
 import MethodItem from '../components/MethodItem';
 import MethodSelfResponse from '../components/MethodSelfResponse';
+import AnimatedPage from '../components/AnimatedPage';
 
 
-
-function Filledmethods(){
+function Filledmethods() {
     const [yourRespondedMethods, setYourRespondedMethods] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -48,24 +48,26 @@ function Filledmethods(){
     console.log(yourRespondedMethods);
 
 
-    return(
-        <div className='fm-main-container'>
-            <Navbar />
-            <div className='fm-method-list'>
-                <h2>Methods You Responded To</h2>
-                {yourRespondedMethods.map((method) => (
-                    <div
-                        key={method.methodId}
-                        className='fm-method-item-container'
-                    // onClick={() => handleMethodClick(method)}
-                    >
-                        <MethodSelfResponse method={method} />
-                    </div>
-                ))}
+    return (
+        <AnimatedPage>
+            <div className='fm-main-container'>
+                <Navbar />
+                <div className='fm-method-list'>
+                    <h2>Methods You Responded To</h2>
+                    {yourRespondedMethods.map((method) => (
+                        <div
+                            key={method.methodId}
+                            className='fm-method-item-container'
+                        // onClick={() => handleMethodClick(method)}
+                        >
+                            <MethodSelfResponse method={method} />
+                        </div>
+                    ))}
+
+                </div>
 
             </div>
-
-        </div>
+        </AnimatedPage>
     )
 }
 

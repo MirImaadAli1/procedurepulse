@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { auth } from "../firebase"; // Import the 'auth' object from your firebase module
+import AnimatedPage from "../components/AnimatedPage";
 
 function PasswordReset() {
   const [resetEmail, setResetEmail] = useState("");
@@ -28,22 +29,24 @@ function PasswordReset() {
   };
 
   return (
-    <div>
-      <h1>Password Reset</h1>
-      {emailSent ? (
-        <p>Password reset email sent. Check your inbox.</p>
-      ) : (
-        <form onSubmit={handleForgotPassword}>
-          <input
-            type="email"
-            placeholder="Enter your email here"
-            value={resetEmail}
-            onChange={(e) => setResetEmail(e.target.value)}
-          />
-          <button type="submit">Send Password Reset Email</button>
-        </form>
-      )}
-    </div>
+    <AnimatedPage>
+      <div>
+        <h1>Password Reset</h1>
+        {emailSent ? (
+          <p>Password reset email sent. Check your inbox.</p>
+        ) : (
+          <form onSubmit={handleForgotPassword}>
+            <input
+              type="email"
+              placeholder="Enter your email here"
+              value={resetEmail}
+              onChange={(e) => setResetEmail(e.target.value)}
+            />
+            <button type="submit">Send Password Reset Email</button>
+          </form>
+        )}
+      </div>
+    </AnimatedPage>
   );
 }
 

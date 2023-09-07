@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 
 import './Fillmethod.css';
+import AnimatedPage from "../components/AnimatedPage";
 
 function Fillmethod() {
     const [requiredMethod, setRequiredMethod] = useState('');
@@ -32,39 +33,41 @@ function Fillmethod() {
     };
 
     return (
-        <div className="fillmethod-main-container">
-            <Navbar />
-            <div className="fillmethod-container">
-                <h1>Search for Desired Method</h1>
-                <input
-                    className='requiredmethod-input'
-                    type="text"
-                    id="requiredMethodName"
-                    value={requiredMethod}
-                    onChange={e => setRequiredMethod(e.target.value)}
-                />
-                <button className="requiredmethod-button" onClick={handleMethodQuery} disabled={isLoading}>
-                    {isLoading ? 'Searching...' : 'Search'}
-                </button>
-        
-                <div className="result-container">
-                    <h1>Search Results:</h1>
-                    {/* Map over the data array and render each element */}
-                    {searchResults.map((element, index) => (
-                        <div key={index} className="result" onClick={() => navigateToMethod(element.method_id)}>
-                            {/* Replace 'property' with the actual property name you want to display */}
+        <AnimatedPage>
+            <div className="fillmethod-main-container">
+                <Navbar />
+                <div className="fillmethod-container">
+                    <h1>Search for Desired Method</h1>
+                    <input
+                        className='requiredmethod-input'
+                        type="text"
+                        id="requiredMethodName"
+                        value={requiredMethod}
+                        onChange={e => setRequiredMethod(e.target.value)}
+                    />
+                    <button className="requiredmethod-button" onClick={handleMethodQuery} disabled={isLoading}>
+                        {isLoading ? 'Searching...' : 'Search'}
+                    </button>
 
-                            <p>Method Name:{element.method_name}</p>
-                            <p>Made By:{element.method_maker_name}</p>
-                            <p>Created{element.method_date}</p>
-                            
-                            {/* Add more properties as needed */}
-                        </div>
-                    ))}
+                    <div className="result-container">
+                        <h1>Search Results:</h1>
+                        {/* Map over the data array and render each element */}
+                        {searchResults.map((element, index) => (
+                            <div key={index} className="result" onClick={() => navigateToMethod(element.method_id)}>
+                                {/* Replace 'property' with the actual property name you want to display */}
+
+                                <p>Method Name :{element.method_name}</p>
+                                <p>Made By :{element.method_maker_name}</p>
+                                <p>Created : {element.method_date}</p>
+
+                                {/* Add more properties as needed */}
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
-
             </div>
-        </div>
+        </AnimatedPage>
     );
 }
 

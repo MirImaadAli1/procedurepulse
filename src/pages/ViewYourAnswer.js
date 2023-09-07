@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState, useEffect } from 'react';
+import AnimatedPage from '../components/AnimatedPage';
 
 function ViewYourAnswer() {
     const location = useLocation();
@@ -30,21 +31,22 @@ function ViewYourAnswer() {
     // console.log("photodata", answerData[0].photo);
 
     return (
-        <div className="vya-main-container">
-            <Navbar />
-            <div className="vya-method-container">
-                <h2>These are Your Answers!</h2>
-                {answerData.map((response, index) => (
-                    <div key={index} className='vya-bordered-container'>
-                        <p>Question {index + 1}</p>
-                        <p className='question-class'>{response.question}</p>
-                        <p>Your Answer: {response.answer}</p>
-                        <p>Your Comments: {response.comments}</p>
-                        <img src={`data:image/plain;base64,${answerData.photo}`} alt="Answer Photo" />
-                    </div>
-                ))}
+        <AnimatedPage>
+            <div className="vya-main-container">
+                <Navbar />
+                <div className="vya-method-container">
+                    <h2>These are Your Answers!</h2>
+                    {answerData.map((response, index) => (
+                        <div key={index} className='vya-bordered-container'>
+                            <p>Question {index + 1}</p>
+                            <p className='question-class'>{response.question}</p>
+                            <p>Your Answer: {response.answer}</p>
+                            <p>Your Comments: {response.comments}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
+        </AnimatedPage>
     )
 }
 // function createImageURL(bufferData) {

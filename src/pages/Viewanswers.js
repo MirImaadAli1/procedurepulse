@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState, useEffect } from 'react';
+import AnimatedPage from '../components/AnimatedPage';
 
 function Viewanswers() {
     const location = useLocation();
@@ -44,22 +45,24 @@ function Viewanswers() {
     };
 
     return (
-        <div className="va-main-container">
-            <Navbar />
-            <div className="va-method-container">
-                <h2>These are {responderUsername}'s Answers!</h2>
-                {answerData && answerData.map((question, index) => (
-                    <div key={answerData.question_id} className='va-bordered-container'>
-                        <p>Question {index + 1} </p>
-                        <p className='question-class'>{question.question}</p>
-                        <p>Answer : {question.answer}</p>
-                        <p>Comments : {question.comments}</p>
-                        <p>Photo : {question.photo}</p>
-                    </div>
-                ))}
-            </div>
+        <AnimatedPage>
+            <div className="va-main-container">
+                <Navbar />
+                <div className="va-method-container">
+                    <h2>These are {responderUsername}'s Answers!</h2>
+                    {answerData && answerData.map((question, index) => (
+                        <div key={answerData.question_id} className='va-bordered-container'>
+                            <p>Question {index + 1} </p>
+                            <p className='question-class'>{question.question}</p>
+                            <p>Answer : {question.answer}</p>
+                            <p>Comments : {question.comments}</p>
+                            <p>Photo : {question.photo}</p>
+                        </div>
+                    ))}
+                </div>
 
-        </div>
+            </div>
+        </AnimatedPage>
     )
 }
 

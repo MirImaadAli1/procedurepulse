@@ -25,6 +25,22 @@
     color: white;
 }
 
+.details-input{
+    margin-left: 2vh;
+}
+
+h2{
+    font-size: 25px;
+}
+
+p{
+    font-size: 25px;
+}
+
+option{
+    font-size: 25px;
+}
+
 .update-button{
     margin-top: 5vh;
     background-color: red;

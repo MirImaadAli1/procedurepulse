@@ -2,6 +2,7 @@ import './Viewquestions.css'
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import AnimatedPage from '../components/AnimatedPage';
 
 
 
@@ -27,27 +28,29 @@ function Viewquestion() {
     console.log(methodData);
 
     return (
-        <div className="vq-main-container">
-            <Navbar />
-            <div className="vqmethod-container">
-                <h2>This is your method called {methodData.method_name} !</h2>
-                <div className="info-container">
-                    <div className="made-by">
-                        <p>Made By: {methodData.method_maker_name}</p>
+        <AnimatedPage>
+            <div className="vq-main-container">
+                <Navbar />
+                <div className="vqmethod-container">
+                    <h2>This is your method called {methodData.method_name} !</h2>
+                    <div className="info-container">
+                        <div className="made-by">
+                            <p>Made By: {methodData.method_maker_name}</p>
+                        </div>
+                        <div className="date">
+                            <p>Date: {methodData.method_date}</p>
+                        </div>
                     </div>
-                    <div className="date">
-                        <p>Date: {methodData.method_date}</p>
-                    </div>
+                    {methodData.questions && methodData.questions.map((questions, index) => (
+                        <div key={questions.question_id} className='vqbordered-container'>
+                            <p>Question {index + 1}</p>
+                            <p>{questions.question_text}</p>
+                        </div>
+                    ))}
                 </div>
-                {methodData.questions && methodData.questions.map((questions, index) => (
-                    <div key={questions.question_id} className='vqbordered-container'>
-                        <p>Question {index + 1}</p>
-                        <p>{questions.question_text}</p>
-                    </div>
-                ))}
-            </div>
 
-        </div>
+            </div>
+        </AnimatedPage>
     )
 }
 

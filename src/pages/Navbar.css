@@ -2,28 +2,32 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 110px;
+  width: 210vh;
+  height: 12vh;
   box-shadow: 1px 1px 3px 3px rgb(61, 60, 60, 0.4);
   background-color: black;
 }
 
 .nav-bar .logo{
-  font-size: 24px; /* Adjust the size as needed */
+  font-size: 30px; /* Adjust the size as needed */
   margin-right: 10px; /* Add margin to separate it from other elements */
   color: white;
   margin-left: 250px;
+
 }
 
 .nav-bar .display-menu{
   display: flex;
   align-items: center;
+  font-size: 30px;
   justify-content: space-around;
-  margin-right: 100px;
+  margin-right: 19vh;
 }
 
 
 .display-menu .menu{
   padding: 0 100px;
+  
   color: white;
   text-decoration: none;
   position: relative;
@@ -52,7 +56,7 @@
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
   justify-content: center; /* Center items vertically */
-  border: 0.1vh solid red;
+  border: 0.1vh solid white;
   
 }
 
@@ -61,20 +65,29 @@
   color: white;
   padding-top: 2vh;
   height: 25vh;
-  width: 30vh;
+  width: 70vh;
   position: absolute; /* Position absolutely */
   top: 150%; /* Place it below the parent element */
-  left: 0; /* Align with the left edge of the parent element */
+  right: 0%;
+ 
+  /* Align with the left edge of the parent element */
   z-index: 1; /* Ensure it appears above other content */
   display: flex; /* Enable flexbox */
   flex-direction: column; /* Stack items vertically */
   align-items: center; /* Center items horizontally */
   justify-content: center; /* Center items vertically */
-  border: 0.1vh solid red;
+  border: 0.1vh solid white;
 }
 
 .dropdown-item-button{
-  background-color: lightcoral;
+  background-color: red;
+  color: black;
+  font-size: 24px;
+  text-align: center;
+  padding: 15px 20px;
+  border-radius: 5px;
+  margin-top: 1vh;
+  display: inline-block;
 }
 .dropdown{
   position: relative;
@@ -82,8 +95,13 @@
 
 .dropdown-item{
   padding-bottom: 2vh;
-  
-  
+  border-bottom: 1px solid #ccc; /* Add a 1px solid line as a separator */
+  margin-bottom: 5px; /* Adjust margin to control spacing between items */
+}
+
+.user-logo{
+  background-color: black;
+  font-size: 30px;
 }
 
 

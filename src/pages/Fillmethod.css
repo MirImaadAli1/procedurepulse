@@ -23,6 +23,7 @@
     align-items: center;
     /* Center content horizontally */
     color: white;
+    overflow-y: auto;
 }
 
 .requiredmethod-button {
@@ -42,14 +43,15 @@
 .result-container {
     margin-top: 2vh;
     display: block;
+    font-size: 20px;
 
 }
 
 
 .result {
     background-color: black;
-    border: 1px solid red;
-    padding: 18px;
+    border: 1px solid white;
+    padding: 10vh 1vh;   
     width: 95vh;
     height: 10vh;
     /* Set the height to 50% of the viewport height */
