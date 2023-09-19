@@ -6,7 +6,14 @@ const cors = require('cors');
 const { useState } = require('react');
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000', // Adjust the allowed origin as needed
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Enable credentials (cookies, HTTP authentication)
+  optionsSuccessStatus: 204, // Some legacy browsers (IE11) choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const db = mysql.createConnection({
