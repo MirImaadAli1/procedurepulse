@@ -12,6 +12,14 @@ const corsOptions = {
   optionsSuccessStatus: 204, // Some legacy browsers (IE11) choke on 204
 };
 
+// Serve static files from the 'build' directory (where your React app is built)
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Handle requests by serving the 'index.html' file for any route
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
