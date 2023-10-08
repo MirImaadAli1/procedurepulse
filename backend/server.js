@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const app = express();
 const corsOptions = {
-  origin: 'https://procedure-pulse.netlify.app', // Adjust the allowed origin as needed
+  origin: ['https://procedure-pulse.netlify.app','http://localhost:3000'], // Adjust the allowed origin as needed
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Enable credentials (cookies, HTTP authentication)
   optionsSuccessStatus: 204, // Some legacy browsers (IE11) choke on 204
