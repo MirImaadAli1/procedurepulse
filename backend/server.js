@@ -84,7 +84,7 @@ app.post('/methods', async (req, res) => {
 
     // Insert survey data into the 'surveys' table
     const surveyQuery = 'INSERT INTO created_methods (method_id, method_name, method_maker_id, method_maker_name, method_date) VALUES (?, ?, ?, ?, ?)';
-    await db.query(surveyQuery, [methodId, methodName, userId, trimmedMethodName, creationDate]);
+    await db.query(surveyQuery, [methodId, trimmedMethodName, userId, methodMaker, creationDate]);
 
     // Insert questions into the 'questions' table using Promise.all
     const questionsQuery = 'INSERT INTO questions (method_id, question_text) VALUES (?, ?)';
