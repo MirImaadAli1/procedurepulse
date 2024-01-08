@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
@@ -69,7 +67,9 @@ app.post('/methods', async (req, res) => {
   try {
     const { methodId, userId, methodMaker, methodName, creationDate, questions } = req.body;
 
-    console.log("workingvarible", methodMaker);
+    const trimmedMethodName = methodName.trim();
+
+    console.log("workingvarible", trimmedMethodName);
 
     // Start a transaction
     await new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ app.post('/methods', async (req, res) => {
 
     // Insert survey data into the 'surveys' table
     const surveyQuery = 'INSERT INTO created_methods (method_id, method_name, method_maker_id, method_maker_name, method_date) VALUES (?, ?, ?, ?, ?)';
-    await db.query(surveyQuery, [methodId, methodName, userId, methodMaker, creationDate]);
+    await db.query(surveyQuery, [methodId, methodName, userId, trimmedMethodName, creationDate]);
 
     // Insert questions into the 'questions' table using Promise.all
     const questionsQuery = 'INSERT INTO questions (method_id, question_text) VALUES (?, ?)';
